@@ -40,7 +40,7 @@ public class Gui {
 
 
 
-        //button
+
         JButton copy = new JButton("Copy");
         copy.setBounds(15,200,319,25);
         copy.setBackground(Color.WHITE);
@@ -48,7 +48,7 @@ public class Gui {
 
 
 
-        //login
+
         JLabel login = new JLabel("Print:");
         login.setBounds(25,10,50,20);
         login.setOpaque(true);
@@ -59,7 +59,7 @@ public class Gui {
         JTextField pass3 = new JTextField();
         pass3.setBounds(100,10,230,20);
 
-        //
+
         JButton button = new JButton("Decode");
         button.setBounds(175,230,159,25);
         button.setBackground(Color.WHITE);
@@ -74,7 +74,7 @@ public class Gui {
             }
         });
 
-        //button
+
         JButton code = new JButton("Encode");
         code.setBounds(15,230,159,25);
         code.setBackground(Color.WHITE);
@@ -98,7 +98,7 @@ public class Gui {
             }
         });
 
-//login
+
 
 
         copy.addActionListener(new ActionListener() {
