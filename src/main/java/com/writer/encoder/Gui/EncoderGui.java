@@ -10,7 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
-public class Gui {
+public class EncoderGui {
 
 
     public static void frame(String... args)  {
@@ -111,6 +111,17 @@ public class Gui {
         });
 
 
+        JButton maingui = new JButton("Return to main frame");
+        maingui.setBounds(15,100,319,25);
+        maingui.setBackground(Color.WHITE);
+        maingui.setForeground(Color.BLACK);
+        maingui.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainGui.frame();
+                frame.dispose();
+            }
+        });
 
 
 
@@ -123,7 +134,7 @@ public class Gui {
         frame.add(button);
         frame.add(output);
         frame.add(outputt);
-
+        frame.add(maingui);
         frame.add(pass3);
     }
 }
