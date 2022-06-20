@@ -10,19 +10,30 @@ import java.io.IOException;
 import java.net.*;
 
 public class WebhookSpamGui extends JFrame {
+
+
+
+
+    public  static boolean isEmbeded = false;
+
+
+
+
+
+
     public static void frame(String... args){
         JFrame frame = new JFrame("Webhook spammer");
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
-        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+        int x = (int) ((Toolkit.getDefaultToolkit().getScreenSize().height) / 2);
+        int y = (int) ((Toolkit.getDefaultToolkit().getScreenSize().width ) / 2);
         //Centering window
-        frame.setBounds(x,y,350,300);
+        frame.setBounds(y,x,350,300);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setBackground(Color.WHITE);
         frame.setLayout(null);
         frame.setResizable(false);
         frame.setBackground(Color.WHITE);
+
 
 
         //Webhook field
@@ -89,9 +100,79 @@ public class WebhookSpamGui extends JFrame {
 
 
 
+        //Author
+        JLabel iconUrlField = new JLabel("Author:");
+        iconUrlField.setBounds(10000,1000,80,20);
+        iconUrlField.setOpaque(true);
+        iconUrlField.setForeground(Color.BLACK);
+        iconUrlField.setBackground(Color.WHITE);
+        iconUrlField.setFont(new Font("Vernanda",Font.BOLD,15));
+        //Icon text field
+        JTextField iconTextField = new JTextField("");
+        iconTextField.setBounds(10000,10000,220,20);
+        frame.add(iconTextField);
+        frame.add(iconUrlField);
+
+        //Author
+        JLabel title = new JLabel("Title:");
+        title.setBounds(10000,1000,80,20);
+        title.setOpaque(true);
+        title.setForeground(Color.BLACK);
+        title.setBackground(Color.WHITE);
+        title.setFont(new Font("Vernanda",Font.BOLD,15));
+        //Icon text field
+        JTextField title1 = new JTextField("");
+        title1.setBounds(10000,10000,220,20);
+        frame.add(title1);
+        frame.add(title);
+
+        //Author
+        JLabel image = new JLabel("Image:");
+        image.setBounds(10000,1000,80,20);
+        image.setOpaque(true);
+        image.setForeground(Color.BLACK);
+        image.setBackground(Color.WHITE);
+        image.setFont(new Font("Vernanda",Font.BOLD,15));
+        //Icon text field
+        JTextField image1 = new JTextField("");
+        image1.setBounds(10000,10000,220,20);
+        frame.add(image);
+        frame.add(image1);
+
+        //Author
+        JLabel image3 = new JLabel("Image2:");
+        image3.setBounds(10000,1000,80,20);
+        image3.setOpaque(true);
+        image3.setForeground(Color.BLACK);
+        image3.setBackground(Color.WHITE);
+        image3.setFont(new Font("Vernanda",Font.BOLD,15));
+        //Icon text field
+        JTextField image4 = new JTextField("");
+        image4.setBounds(10000,10000,220,20);
+        frame.add(image3);
+        frame.add(image4);
+
+        //Footer
+        JLabel foot = new JLabel("Footer:");
+        foot.setBounds(10000,1000,80,20);
+        foot.setOpaque(true);
+        foot.setForeground(Color.BLACK);
+        foot.setBackground(Color.WHITE);
+        foot.setFont(new Font("Vernanda",Font.BOLD,15));
+        //Footer
+        JTextField foot1 = new JTextField("");
+        foot1.setBounds(10000,10000,220,20);
+        frame.add(foot);
+        frame.add(foot1);
 
 
-
+        //Embed text field
+        JLabel embedLabel = new JLabel("Embed?:");
+        embedLabel.setBounds(25,81,100,30);
+        embedLabel.setOpaque(true);
+        embedLabel.setForeground(Color.BLACK);
+        embedLabel.setBackground(Color.WHITE);
+        embedLabel.setFont(new Font("Vernanda",Font.BOLD,15));
 
         //Spam button
         JButton spam = new JButton("Spam!");
@@ -101,12 +182,34 @@ public class WebhookSpamGui extends JFrame {
         spam.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               //Do Spam
+                //Do Spam
+                DiscordWebhook.EmbedObject embed = new DiscordWebhook.EmbedObject();
                 DiscordWebhook webhook = new DiscordWebhook(webhookField.getText());
-                if(mentionCheckBox.isSelected()){
-                webhook.setContent("@everyone "+textForSpamTextField.getText());
-                }else {
+                DiscordWebhook simpleDiscordWebhook = null;
+                if(mentionCheckBox.isSelected() && !isEmbeded){
+                    webhook.setContent("@everyone "+textForSpamTextField.getText());
+
+                } if(!mentionCheckBox.isSelected() && !isEmbeded){
                     webhook.setContent(textForSpamTextField.getText());
+                }  if(isEmbeded && mentionCheckBox.isSelected()){
+                    webhook.setContent("@everyone");
+                    embed.setAuthor(iconTextField.getText(),null,null);
+                    embed.setTitle(title1.getText());
+                    embed.setDescription(textForSpamTextField.getText());
+                    embed.setImage(image1.getText());
+                    embed.setThumbnail(image4.getText());
+                    embed.setFooter(foot1.getText(),iconTextField.getText());
+                    embed.setColor(new Color(0x8B10F14B, true));
+                    webhook.addEmbed(embed);
+                }if(isEmbeded && !mentionCheckBox.isSelected()){
+                    embed.setAuthor(iconTextField.getText(),null,null);
+                    embed.setTitle(title1.getText());
+                    embed.setDescription(textForSpamTextField.getText());
+                    embed.setImage(image1.getText());
+                    embed.setThumbnail(image4.getText());
+                    embed.setFooter(foot1.getText(),null);
+                    embed.setColor(new Color(0x8B10F14B, true));
+                    webhook.addEmbed(embed);
                 }
                 try {
                     int numberToSpam = Integer.parseInt(amountField.getText());
@@ -167,7 +270,88 @@ public class WebhookSpamGui extends JFrame {
 
 
 
+
+        //Embed checkmark
+        JCheckBox embedCheck = new JCheckBox();
+        embedCheck.setBounds(110,81,30,30);
+        embedCheck.setOpaque(true);
+        embedCheck.setForeground(Color.BLACK);
+        embedCheck.setBackground(Color.WHITE);
+
+        embedCheck.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(embedCheck.isSelected()){
+                    System.out.println("Okkkk");
+                    isEmbeded = true;
+                    //REMOVES components for NOT EMBED
+                    frame.setBounds(y,x,350,700);
+                    maingui.setBounds(15,630,319,25);
+                    spam.setBounds(15,600,319,25);
+                    nukeButton.setBounds(15,570,319,25);
+                    
+                    iconTextField.setBounds(110,170,220,20);
+                    iconUrlField.setBounds(25,170,80,20);
+
+                    title.setBounds(25,200,80,20);
+                    title1.setBounds(110,200,220,20);
+
+                    textForSpamText.setBounds(25,230,80,20);
+                    textForSpamTextField.setBounds(110,230,220,20);
+
+                    image.setBounds(25,260,80,20);
+                    image1.setBounds(110,260,220,20);
+
+                    image3.setBounds(25,290,80,20);
+                    image4.setBounds(110,290,220,20);
+
+                    foot.setBounds(25,320,80,20);
+                    foot1.setBounds(110,320,220,20);
+
+
+
+
+
+
+
+                }else {
+                    System.out.println("Nooo");
+                    isEmbeded = false;
+                    //ADD components for NOT EMBED
+                    textForSpamText.setBounds(25,120,80,20);
+                    textForSpamTextField.setBounds(110,120,220,20);
+                    frame.setBounds(y,x,350,300);
+
+                    maingui.setBounds(15,170,319,25);
+                    spam.setBounds(15,200,319,25);
+                    nukeButton.setBounds(15,230,319,25);
+
+                    iconTextField.setBounds(1100,170,220,20);
+                    iconUrlField.setBounds(2500,170,80,20);
+
+                    title.setBounds(2500,200,80,20);
+                    title1.setBounds(11000,200,220,20);
+
+                    image.setBounds(1000,260,80,20);
+                    image1.setBounds(1000,260,80,20);
+
+                    foot.setBounds(25000,320,80,20);
+                    foot.setBounds(110000,310,220,20);
+
+                }
+            }
+        });
+
+
+
+
+
+
         //add
+
+        frame.add(embedCheck);
+        frame.add(embedLabel);
+
         frame.setVisible(true);
 
         frame.add(webhookField);

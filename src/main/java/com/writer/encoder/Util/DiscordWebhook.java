@@ -248,6 +248,7 @@ public class DiscordWebhook {
             return this;
         }
 
+
         private class Footer {
             private String text;
             private String iconUrl;
